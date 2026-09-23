@@ -1,7 +1,29 @@
-<?php
-  // To make sure we don't need to create the header section of the website on multiple pages, we instead create the header HTML markup in a separate file which we then attach to the top of every HTML page on our website. In this way if we need to make a small change to our header we just need to do it in one place. This is a VERY cool feature in PHP!
-  require "header.php";
-?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="This is an example of a meta description. This will often show up in search results.">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <title>K'norigins</title>
+    <link rel="icon" href="./assets/images/smartzombie.png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="./js/p5.js" defer></script>
+    <script src="./js/p5.sound.js" defer></script>
+    <script src="./js/knorigins.js" defer></script>
+  </head>
+  <body>
+
+    <header>
+      <nav class="nav-header-main">
+        <a class="header-logo" href="index.html">
+          <img src="./assets/images/zombie.png" alt="logo">
+        </a>
+        <ul>
+          <li><a href="./index.html">Lobby</a></li>
+          <li><a href="./patchnotes.html">Patch Notes</a></li>
+        </ul>
+      </nav>
+    </header>
 
     <main>
       <div id="wrapper">
@@ -29,7 +51,6 @@
                 </p>
                 <br/>
                 <a href="./patchnotes.html" target="_blank">Patch Notes</a>
-                <a href="./highscores.php" target="_blank">Highscores</a>
                 <br/>
                 <br/>
                 <h2>Prepare Your Adventure</h2>
@@ -132,6 +153,9 @@
                 <br/>
                 <h2>Score</h2>
                 <h2 id="game-score">0</h2>
+                <br/>
+                <h2>High Score</h2>
+                <h2 id="game-high-score">0</h2>
               </div>
               <div id="survive-cont">
                 <p>SURVIVE</p>
@@ -145,20 +169,14 @@
 
               <div id="game-maze"></div>
 
-              <div>
-                <form hidden="hidden" id="highscore-form" action="./php/new_score.php" method="POST">
-                  <input name='username' value='NULL'>
-                  <input name='final-score' value='null'>
-                </form>
-              </div>
-
         <!-- End game -->
         </div>
       <!-- End Wrapper -->
       </div>
     </main>
 
-<?php
-  // And just like we include the header from a separate file, we do the same with the footer.
-  require "footer.php";
-?>
+    <footer>
+    </footer>
+
+  </body>
+</html>

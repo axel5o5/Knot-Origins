@@ -15,6 +15,11 @@ with a healing potion. Upon death or when the cure is found, the users high scor
 automatically uploaded to a highscores list, where players can compete
 to have the top rank.
 
+## Running It
+The game is a static p5.js sketch — no server required. Open `index.html`
+directly in a browser, or serve the folder statically (e.g. `python3 -m
+http.server`) and visit it.
+
 ## Languages & Libraries
 * Languages
  * HTML

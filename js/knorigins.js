@@ -29,6 +29,7 @@ let lobbyCont  = document.querySelector("#lobby-container"),
     p2HealthText = document.querySelector("#P2-health"),
     currRound  = document.querySelector("#game-round"),
     currScore = document.querySelector("#game-score"),
+    highScoreDisplay = document.querySelector("#game-high-score"),
     mazeCont   = document.querySelector("#game-maze"),
     buildSelect = document.querySelector("#char-builder"),
     trapSelect = document.querySelector("#char-trapper"),
@@ -413,6 +414,34 @@ function updateScore (score) {
   //score is multiplied by 100 to make it a nice big number and the diffMultiplier is factored in to encourage players to play on harder difficulties
   currScore.innerHTML = Math.floor(score);
 }
+
+// The game used to POST the final score to a PHP/MySQL backend so it could be
+// ranked against everyone else's. That backend's hosting no longer exists, so
+// we keep a personal best locally instead and show it beside the live score.
+const HIGH_SCORE_KEY = "knorigins-high-score";
+
+function getHighScore () {
+  return Number(localStorage.getItem(HIGH_SCORE_KEY)) || 0;
+}
+
+function updateHighScoreDisplay () {
+  let highScore = getHighScore();
+  if (highScoreDisplay) {
+    highScoreDisplay.innerHTML = highScore;
+  } else {
+    console.log("High score: " + highScore);
+  }
+}
+
+function saveHighScore (score) {
+  score = Math.floor(score);
+  if (score > getHighScore()) {
+    localStorage.setItem(HIGH_SCORE_KEY, score);
+  }
+  updateHighScoreDisplay();
+}
+
+updateHighScoreDisplay();
 
 
 function endGame () {
@@ -1747,26 +1776,13 @@ class Game {
     removePlayer1Keys();
     removePlayer2Keys();
     clearInterval(this.ticking);
-    //while (username || username.length < 10) {
-    let username = prompt(`
+    saveHighScore(this.score);
+    alert(`
       K'not claims another victim... \n
       You survived ${this.round} rounds. \n
       Score: ${Math.floor(this.score)} \n
-      Username:
+      High Score: ${getHighScore()}
     `);
-    let form = document.forms["highscore-form"]; //shoudl return the first form found in the document
-    form["username"].value = username ;
-    form["final-score"].value = Math.floor(this.score) ;
-    /*
-    form.querySelector("input [name = 'username']").value = username ;
-    form.querySelectorAll("input [name = 'final-score']").value = Math.floor(this.score) ;
-    */
-    form.submit();
-/*
-    document.getElementById('username').value = username
-    document.getElementById('final-score').value = Math.floor(this.score)
-*/
-
     endGame();
   }
 
@@ -1776,18 +1792,14 @@ class Game {
     removePlayer2Keys();
     clearInterval(this.ticking);
 
-    let username = prompt(`
+    saveHighScore(this.score);
+    alert(`
       You did it! \n
       You found the cure after ${this.round} rounds. \n
       Score: ${Math.floor(this.score)} \n
-      Username:
+      High Score: ${getHighScore()}
       `);
 
-      let form = document.forms["highscore-form"]; //should return the first form found in the document
-      form["username"].value = username ;
-      form["final-score"].value = Math.floor(this.score) ;
-
-      form.submit();
     endGame();
   }
 
